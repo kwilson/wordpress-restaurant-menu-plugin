@@ -1,8 +1,4 @@
-<?php
-    
-include('assets/inc/class.RestaurantMenu.php');
-include('assets/inc/class.RestaurantMenu.Menu.php');
-include('assets/inc/class.RestaurantMenu.MenuItem.php');
+<?php    
 
 /**
  * Gets the content for the specified area ID.
@@ -18,6 +14,11 @@ function restaurantmenu_getareacontent($areaid) {
         echo "<dl>";
         foreach($menuitems as $menuitem) {
             echo "<dt>" . $menuitem->getTitle() . "</dt>";
+
+            $descripton = $menuitem->getDescription();
+            if (!is_null($descripton)) {
+                echo "<dd>" . $descripton . "</dd>";
+            }
         }
 
         echo "</dl>";
