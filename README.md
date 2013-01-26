@@ -1,4 +1,4 @@
-wordpress-restaurant-menu-plugin
+Wordpress Restuarant Menu Plugin
 ================================
 
-Restaurant menu plugin for Wordpress
+Wordpress plugin to provide a resturant menu manager.
