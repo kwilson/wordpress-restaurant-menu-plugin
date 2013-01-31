@@ -1,6 +1,40 @@
 <?php
 
 class RestaurantMenu_DatabaseManager {
+
+    public static function GetMenus() {
+        global $wpdb;
+        $table_name = self::ResolveTableName("menu"); 
+
+        $menus = $wpdb->get_results( 
+	        "
+	        SELECT * 
+	        FROM $table_name
+	        ORDER BY displayOrder
+	        "
+        );
+
+        return $menus;
+    }
+
+    public static function InsertMenu($title, $description) {
+        global $wpdb;
+        $table_name = self::ResolveTableName("menu"); 
+
+        return $wpdb->insert( 
+	        $table_name, 
+	        array( 
+		        'title' => $title, 
+		        'description' => $description,
+                'displayOrder' => 1 
+	        ), 
+	        array( 
+		        '%s', 
+		        '%s', 
+		        '%d' 
+	        ) 
+        );
+    }
     
     /**
      * Installs or upgrades the required tables.
@@ -14,6 +48,7 @@ class RestaurantMenu_DatabaseManager {
                     id mediumint(9) NOT NULL AUTO_INCREMENT,
                     title tinytext NOT NULL,
                     description text,
+                    displayOrder tinyint NOT NULL,
                     UNIQUE KEY id (id)
                 );";
 
