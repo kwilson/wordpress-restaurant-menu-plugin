@@ -7,7 +7,32 @@ class PageRenderer {
 		    wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
 	    }
 
-	    self::RenderMainMenuPage();
+        
+        if( isset($_GET[ 'f' ]) ) {
+            $pageFunction = $_GET[ 'f' ];
+            $menuId = $_GET[ 'menuid' ];
+
+            switch ($pageFunction)
+            {
+                case 'manage-menu':
+	                self::RenderManageMenu($menuId);
+                  break;
+
+                case 'edit-menu':
+	                self::RenderEditMenu($menuId);
+                  break;
+
+                case 'delete-menu':
+	                self::RenderDeleteMenu($menuId);
+                  break;
+
+                default:
+	                self::RenderMainMenuPage();
+            }
+        }
+        else {
+	        self::RenderMainMenuPage();
+        }
     }
 
     function RenderMainMenuPage() {
@@ -54,9 +79,9 @@ class PageRenderer {
                 echo    '<td>';
                 echo        '<strong>' . $menu->title . '</strong>';
                 echo        '<div class="row-actions-visible">';
-                echo            '<span class="edit"><a href="#">manage</a> | </span>';
-                echo            '<span class="edit"><a href="#">edit details</a> | </span>';
-                echo            '<span class="delete"><a href="#">delete</a></span>';
+                echo            '<span class="edit"><a href="' . get_settings('siteurl')."/wp-admin/edit.php?post_type=page&page=restaurant-menu&f=manage-menu&menuid=" . $menu->id . '">manage</a> | </span>';
+                echo            '<span class="edit"><a href="' . get_settings('siteurl')."/wp-admin/edit.php?post_type=page&page=restaurant-menu&f=edit-menu&menuid=" . $menu->id . '">edit details</a> | </span>';
+                echo            '<span class="delete"><a href="' . get_settings('siteurl')."/wp-admin/edit.php?post_type=page&page=restaurant-menu&f=delete-menu&menuid=" . $menu->id . '">delete</a></span>';
                 echo        '</div>';
                 echo    '</td>';
                 echo    '<td class="column-description desc">' . $menu->description . '</td>';
@@ -89,6 +114,18 @@ class PageRenderer {
         </div>
 
         <?php 
+    }
+
+    function RenderManageMenu($menuId) {
+        echo '<h2>Manage Menu ' . $menuId . '</h2>';
+    }
+
+    function RenderEditMenu($menuId) {
+        echo '<h2>Edit Menu ' . $menuId . '</h2>';
+    }
+
+    function RenderDeleteMenu($menuId) {
+        echo '<h2>Delete Menu ' . $menuId . '</h2>';
     }
 
     function PostNewMenu($name, $description) {

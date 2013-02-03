@@ -26,7 +26,7 @@ add_action( 'admin_menu', 'add_plugin_menu' );
 
 // Register the plugin page under 'Pages'
 function add_plugin_menu() {
-    add_pages_page( 'Restaurant Menu', 'Restaurant Menu', 'edit_pages', 'restaurant-menu', array('PageRenderer', 'RenderPlugin') );    
+    add_pages_page( 'Restaurant Menu', 'Restaurant Menu', 'edit_pages', 'restaurant-menu', array('PageRenderer', 'RenderPlugin') );     
 }
 
 ?>
